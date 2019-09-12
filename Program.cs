@@ -12,7 +12,13 @@ namespace dotNet_ass1
                 login.LoginScreen();
             }
             Menu menu = new Menu();
-            int choice = menu.MenuScreen();
+            
+                int choice = menu.MenuScreen();
+                
+                
+            
+            
+            
             Console.WriteLine(choice);
             Console.ReadKey();
             
