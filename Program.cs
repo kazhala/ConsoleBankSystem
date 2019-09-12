@@ -13,6 +13,7 @@ namespace dotNet_ass1
             }
             Menu menu = new Menu();
             int choice = menu.MenuScreen();
+            Console.WriteLine(choice);
             Console.ReadKey();
             
         }

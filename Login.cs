@@ -5,7 +5,8 @@ namespace dotNet_ass1
 {
     class Login
     {
-        private string userName, passWord;
+        private string userName;
+        private string passWord;
         private bool loginSuccess = false;
         public string Name
         {
@@ -24,6 +25,7 @@ namespace dotNet_ass1
         public void LoginScreen()
         {
             Console.Clear();
+            this.passWord = "";
             Console.WriteLine("         ------------------------------------------------------------- ");
             Console.WriteLine("        |                Welcome to KAZ Banking System                |");
             Console.WriteLine("         =============================================================");
@@ -47,7 +49,7 @@ namespace dotNet_ass1
             do
             {
                 ConsoleKeyInfo key = Console.ReadKey(true);
-                // Backspace Should Not Work
+                
                 if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
                 {
                     this.passWord += key.KeyChar;
@@ -67,20 +69,25 @@ namespace dotNet_ass1
                 }
             } while (true);
             Console.SetCursorPosition(resultLeft, resultTop);
+            //Console.WriteLine(this.passWord);
+
             string[] loginDetail = File.ReadAllLines("login.txt");
             foreach (string line in loginDetail)
             {
                 string[] namepass = line.Split('|');
+                //Console.WriteLine(namepass[0]);
                 if (this.userName == namepass[0])
                 {
                     if (this.passWord == namepass[1])
                     {
+                        //Console.WriteLine(this.passWord == namepass[1]);
                         this.loginSuccess = true;
              
                     }
                 }
             
             }
+            Console.WriteLine(this.loginSuccess);
             if (!this.loginSuccess)
             {
                 Console.Write("        Credential invalid, please re-enter your detail!");
