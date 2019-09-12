@@ -7,11 +7,11 @@ namespace dotNet_ass1
         static void Main(string[] args)
         {
             Login login = new Login();
-            while (!login.LoginSuccess & !login.Exit)
+            while (!login.LoginSuccess)
             {
                 login.LoginScreen();
             }
-            Console.WriteLine(login.LoginSuccess);
+            
             Console.WriteLine("after login");
         }
     }

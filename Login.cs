@@ -7,7 +7,6 @@ namespace dotNet_ass1
     {
         private string userName, passWord;
         private bool loginSuccess = false;
-        private bool exit = false;
         public string Name
         {
             get
@@ -22,15 +21,9 @@ namespace dotNet_ass1
                 return this.loginSuccess;
             }
         }
-        public bool Exit
-        {
-            get
-            {
-                return this.exit;
-            }
-        }
         public void LoginScreen()
         {
+            Console.Clear();
             Console.WriteLine("         ------------------------------------------------------------- ");
             Console.WriteLine("        |                Welcome to KAZ Banking System                |");
             Console.WriteLine("         =============================================================");
@@ -46,6 +39,54 @@ namespace dotNet_ass1
             Console.Write("                                                  |\n");
             Console.WriteLine("        |                                                             |");
             Console.WriteLine("         ------------------------------------------------------------- ");
+            int resultLeft = Console.CursorLeft;
+            int resultTop = Console.CursorTop;
+            Console.SetCursorPosition(usernameLeft, usernameTop);
+            this.userName = Console.ReadLine();
+            Console.SetCursorPosition(passwordLeft, passwordTop);
+            do
+            {
+                ConsoleKeyInfo key = Console.ReadKey(true);
+                // Backspace Should Not Work
+                if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
+                {
+                    this.passWord += key.KeyChar;
+                    Console.Write("*");
+                }
+                else
+                {
+                    if (key.Key == ConsoleKey.Backspace && this.passWord.Length > 0)
+                    {
+                        this.passWord = this.passWord.Substring(0, (this.passWord.Length - 1));
+                        Console.Write("\b \b");
+                    }
+                    else if (key.Key == ConsoleKey.Enter)
+                    {
+                        break;
+                    }
+                }
+            } while (true);
+            Console.SetCursorPosition(resultLeft, resultTop);
+            string[] loginDetail = File.ReadAllLines("login.txt");
+            foreach (string line in loginDetail)
+            {
+                string[] namepass = line.Split('|');
+                if (this.userName == namepass[0])
+                {
+                    if (this.passWord == namepass[1])
+                    {
+                        this.loginSuccess = true;
+             
+                    }
+                }
+            
+            }
+            if (!this.loginSuccess)
+            {
+                Console.Write("        Credential invalid, please re-enter your detail!");
+            }else if(this.loginSuccess){
+                Console.Write("        Valid credentials, press any key to continue!");
+            }
             Console.ReadKey();
         }
     }
