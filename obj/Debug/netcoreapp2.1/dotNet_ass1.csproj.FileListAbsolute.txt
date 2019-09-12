@@ -1,0 +1,11 @@
+/Users/kevinzhuang/Projects/dotNet_ass1/dotNet_ass1/bin/Debug/netcoreapp2.1/dotNet_ass1.deps.json
+/Users/kevinzhuang/Projects/dotNet_ass1/dotNet_ass1/bin/Debug/netcoreapp2.1/dotNet_ass1.runtimeconfig.json
+/Users/kevinzhuang/Projects/dotNet_ass1/dotNet_ass1/bin/Debug/netcoreapp2.1/dotNet_ass1.runtimeconfig.dev.json
+/Users/kevinzhuang/Projects/dotNet_ass1/dotNet_ass1/bin/Debug/netcoreapp2.1/dotNet_ass1.dll
+/Users/kevinzhuang/Projects/dotNet_ass1/dotNet_ass1/bin/Debug/netcoreapp2.1/dotNet_ass1.pdb
+/Users/kevinzhuang/Projects/dotNet_ass1/dotNet_ass1/obj/Debug/netcoreapp2.1/dotNet_ass1.csprojAssemblyReference.cache
+/Users/kevinzhuang/Projects/dotNet_ass1/dotNet_ass1/obj/Debug/netcoreapp2.1/dotNet_ass1.csproj.CoreCompileInputs.cache
+/Users/kevinzhuang/Projects/dotNet_ass1/dotNet_ass1/obj/Debug/netcoreapp2.1/dotNet_ass1.AssemblyInfoInputs.cache
+/Users/kevinzhuang/Projects/dotNet_ass1/dotNet_ass1/obj/Debug/netcoreapp2.1/dotNet_ass1.AssemblyInfo.cs
+/Users/kevinzhuang/Projects/dotNet_ass1/dotNet_ass1/obj/Debug/netcoreapp2.1/dotNet_ass1.dll
+/Users/kevinzhuang/Projects/dotNet_ass1/dotNet_ass1/obj/Debug/netcoreapp2.1/dotNet_ass1.pdb
