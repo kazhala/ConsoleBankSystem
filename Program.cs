@@ -11,8 +11,10 @@ namespace dotNet_ass1
             {
                 login.LoginScreen();
             }
+            Menu menu = new Menu();
+            int choice = menu.MenuScreen();
+            Console.ReadKey();
             
-            Console.WriteLine("after login");
         }
     }
 }
