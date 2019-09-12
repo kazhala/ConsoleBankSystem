@@ -18,6 +18,10 @@ namespace dotNet_ass1
                 int choice = menu.MenuScreen();
                 switch (choice)
                 {
+                    case 1:
+                        CreateAccount newAcc = new CreateAccount();
+                        newAcc.NewAccScreen();
+                        break;
                     case 7:
                         System.Environment.Exit(0);
 
