@@ -37,11 +37,16 @@ namespace dotNet_ass1
                     string userInput = Console.ReadLine();
                     Console.SetCursorPosition(resultLeft, resultTop);
                     UserChoice = Convert.ToInt32(userInput);
+                    if (UserChoice > 7 || UserChoice < 1)
+                    {
+                        throw new Exception("Please enter a number between 1-7");
+                    }
                 }
-                catch (FormatException e)
+                catch (Exception e)
                 {
-                    Console.WriteLine(e.Message);
+                    Console.WriteLine("                 " + e.Message);
                     error = true;
+                    Console.WriteLine("                 Press any key to continue...");
                     Console.ReadKey();
                 }
                 finally
