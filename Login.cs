@@ -87,7 +87,7 @@ namespace dotNet_ass1
                 }
             
             }
-            Console.WriteLine(this.loginSuccess);
+           //Console.WriteLine(this.loginSuccess);
             if (!this.loginSuccess)
             {
                 Console.Write("        Credential invalid, please re-enter your detail!");

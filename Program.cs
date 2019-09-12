@@ -13,14 +13,25 @@ namespace dotNet_ass1
             }
             Menu menu = new Menu();
             
+            do
+            {
                 int choice = menu.MenuScreen();
+                switch (choice)
+                {
+                    case 7:
+                        System.Environment.Exit(0);
+
+                        break;
+                    default:
+                        break;
+                }
+            } while (true);
+
+
+            //Console.ReadKey();
                 
+            
                 
-            
-            
-            
-            Console.WriteLine(choice);
-            Console.ReadKey();
             
         }
     }
