@@ -30,6 +30,10 @@ namespace dotNet_ass1
                         Deposit deposit = new Deposit();
                         deposit.DepositScreen();
                         break;
+                    case 4:
+                        Withdraw withdraw = new Withdraw();
+                        withdraw.WithdrawScreen();
+                        break;
                     case 7:
                         System.Environment.Exit(0);
 
