@@ -22,6 +22,10 @@ namespace dotNet_ass1
                         CreateAccount newAcc = new CreateAccount();
                         newAcc.NewAccScreen();
                         break;
+                    case 2:
+                        SearchAccount searchAcc = new SearchAccount();
+                        searchAcc.SearchAccountScreen();
+                        break;
                     case 7:
                         System.Environment.Exit(0);
 

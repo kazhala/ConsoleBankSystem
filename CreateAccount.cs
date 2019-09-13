@@ -54,11 +54,12 @@ namespace dotNet_ass1
                     this.userAddress = Console.ReadLine();
                     Console.SetCursorPosition(phoneLeft, phoneTop);
                     string tempInput = Console.ReadLine();
+                    this.phoneNum = Convert.ToInt32(tempInput);
                     if (tempInput.Length > 10)
                     {
                         throw new Exception("Please enter a valid phone number");
                     }
-                    this.phoneNum = Convert.ToInt32(tempInput);
+                    
                     
                     Console.SetCursorPosition(emailLeft, emailTop);
                     this.emailAdd = Console.ReadLine();
