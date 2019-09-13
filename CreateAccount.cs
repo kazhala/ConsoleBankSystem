@@ -111,15 +111,15 @@ namespace dotNet_ass1
         }
         private int genNewAccNum()
         {
-            FileStream accDB = new FileStream("accDB.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            //FileStream accDB = new FileStream("accDB.txt", FileMode.OpenOrCreate, FileAccess.Read);
             string[] allAcc = File.ReadAllLines("accDB.txt");
             int newAccNum = 100000 + allAcc.Length;
-            accDB.Close();
+            //accDB.Close();
             return newAccNum;
         }
         private void saveAccToDB(EmailBody emailBody)
         {
-            FileStream newAccFile = new FileStream($"{emailBody.userAccNum}.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            //FileStream newAccFile = new FileStream($"{emailBody.userAccNum}.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
             File.WriteAllText($"{emailBody.userAccNum}.txt", Convert.ToString(emailBody.userAccNum));
             File.AppendAllText($"{emailBody.userAccNum}.txt", $"\n{0}");
             File.AppendAllText($"{emailBody.userAccNum}.txt", $"\n{emailBody.userFirstName}");
@@ -127,9 +127,15 @@ namespace dotNet_ass1
             File.AppendAllText($"{emailBody.userAccNum}.txt", $"\n{emailBody.userAddress}");
             File.AppendAllText($"{emailBody.userAccNum}.txt", $"\n{emailBody.userPhone}");
             File.AppendAllText($"{emailBody.userAccNum}.txt", $"\n{emailBody.userEmail}");
-            newAccFile.Close();
+            //newAccFile.Close();
             string appendableNum = Convert.ToString(emailBody.userAccNum);
-            File.AppendAllText("accDB.txt", "\n" + appendableNum);
+            if (File.ReadAllLines("accDB.txt").Length == 0)
+            {
+                File.AppendAllText("accDB.txt", appendableNum);
+            } else
+            {
+                File.AppendAllText("accDB.txt", "\n" + appendableNum);
+            }
         }
     }
 }
