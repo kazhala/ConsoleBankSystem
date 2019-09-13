@@ -8,6 +8,7 @@ namespace dotNet_ass1
         private string firstName, lastName, userAddress, emailAdd;
         private int phoneNum;
         private int feedbackLeft, feedbackTop;
+        private string emailSenderAddress = "xuzhuang9897@gmail.com";
         public void NewAccScreen()
         {
             do
@@ -43,8 +44,8 @@ namespace dotNet_ass1
                     Console.Write("                                                     |\n");
                     Console.WriteLine("        |                                                             |");
                     Console.WriteLine("         ------------------------------------------------------------- ");
-                    feedbackLeft = Console.CursorLeft;
-                    feedbackTop = Console.CursorTop;
+                    this.feedbackLeft = Console.CursorLeft;
+                    this.feedbackTop = Console.CursorTop;
                     Console.SetCursorPosition(firstNameLeft, firstNameTop);
                     this.firstName = Console.ReadLine();
                     Console.SetCursorPosition(lastNameLeft, lastNameTop);
@@ -57,20 +58,20 @@ namespace dotNet_ass1
                     {
                         throw new Exception("Please enter a valid phone number");
                     }
-                    phoneNum = Convert.ToInt32(tempInput);
+                    this.phoneNum = Convert.ToInt32(tempInput);
                     
                     Console.SetCursorPosition(emailLeft, emailTop);
-                    emailAdd = Console.ReadLine();
-                    if (!emailAdd.Contains("@"))
+                    this.emailAdd = Console.ReadLine();
+                    if (!this.emailAdd.Contains("@"))
                     {
                         throw new Exception("Please enter a valid email address");
                     }
                     //Console.WriteLine(emailAdd.Contains("gmail.com"));
-                    if (!emailAdd.Contains("gmail.com") && !emailAdd.Contains("outlook.com") && !emailAdd.Contains("uts.edu.au"))
+                    if (!this.emailAdd.Contains("gmail.com") && !this.emailAdd.Contains("outlook.com") && !this.emailAdd.Contains("uts.edu.au"))
                     {
                         throw new Exception("Please enter a valid email address");
                     }
-                    Console.SetCursorPosition(feedbackLeft, feedbackTop);
+                    Console.SetCursorPosition(this.feedbackLeft, this.feedbackTop);
                     string confirm = "";
                     while (confirm != "y" && confirm != "n")
                     {
@@ -86,7 +87,7 @@ namespace dotNet_ass1
 
                     //send the email here
                     EmailSender newEmail = new EmailSender();
-                    newEmail.sendEmail("xuzhuang9897@gmail.com", "kevin7441@gmail.com");
+                    newEmail.sendEmail(this.emailSenderAddress, this.emailAdd);
 
                     Console.WriteLine("                  Account detail is sent to the provided email address");
                     
@@ -98,7 +99,7 @@ namespace dotNet_ass1
                 catch (Exception e)
                 {
                     error = true;
-                    Console.SetCursorPosition(feedbackLeft, feedbackTop);
+                    Console.SetCursorPosition(this.feedbackLeft, this.feedbackTop);
                     Console.WriteLine("                 " + e.Message);
                     Console.WriteLine("                 Press any key to re-enter details..");
                     Console.ReadKey();

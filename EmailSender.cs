@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Net.Mail;
 using System.Net;
 namespace dotNet_ass1
@@ -9,25 +7,36 @@ namespace dotNet_ass1
     {
         public void sendEmail(string from, string to)
         {
-            MailMessage mail = new MailMessage(from, to);
-            mail.Subject = "test";
-            mail.Body = "test";
-
-            SmtpClient smtp = new SmtpClient();
-            smtp.Host = "smtp.gmail.com";
-            smtp.Port = 587;
-
-            smtp.Credentials = new NetworkCredential(
-                "xuzhuang9897@gmail.com", "Wacdzx666");
-            smtp.EnableSsl = true;
-            Console.WriteLine("Sending email...");
-            try
+            using (SmtpClient smtpClient = new SmtpClient())
             {
-                smtp.Send(mail);
-            }
-            catch (Exception e)
-            {
-                Console.Write(e.Message);
+                var basicCredential = new NetworkCredential("xuzhuang9897@gmail.com", "Wacdzx666");
+                using (MailMessage message = new MailMessage())
+                {
+                    MailAddress fromAddress = new MailAddress("xuzhuang9897@gmail.com");
+
+                    smtpClient.EnableSsl = true;
+                    smtpClient.Port = 587;
+                    smtpClient.Host = "smtp.gmail.com";
+                    smtpClient.UseDefaultCredentials = false;
+                    smtpClient.Credentials = basicCredential;
+
+                    message.From = fromAddress;
+                    message.Subject = "your subject";
+                    // Set IsBodyHtml to true means you can send HTML email.
+                    message.IsBodyHtml = true;
+                    message.Body = "<h1>your message body</h1>";
+                    message.To.Add("kevin7441@gmail.com");
+
+                    try
+                    {
+                        smtpClient.Send(message);
+                    }
+                    catch (Exception ex)
+                    {
+                        //Error, could not send the message
+                        Console.Write(ex.Message);
+                    }
+                }
             }
         }
     }
