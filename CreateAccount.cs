@@ -82,9 +82,11 @@ namespace dotNet_ass1
                         throw new Exception("");
                     }
                     //Get the account number
-                    genNewAccNum();
+                    int newAccNum = genNewAccNum();
 
                     //send the email here
+                    EmailSender newEmail = new EmailSender();
+                    newEmail.sendEmail("xuzhuang9897@gmail.com", "kevin7441@gmail.com");
 
                     Console.WriteLine("                  Account detail is sent to the provided email address");
                     
@@ -103,7 +105,7 @@ namespace dotNet_ass1
                 }
             } while (error);
         }
-        private void genNewAccNum()
+        private int genNewAccNum()
         {
             FileStream accDB = new FileStream("accDB.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
             string[] allAcc = File.ReadAllLines("accDB.txt");
@@ -111,7 +113,7 @@ namespace dotNet_ass1
             string appendableNum = Convert.ToString(newAccNum);
             File.AppendAllText("accDB.txt", "\n" + appendableNum);
             accDB.Close();
-            Console.ReadKey();
+            return newAccNum;
         }
     }
 }
