@@ -85,10 +85,10 @@ namespace dotNet_ass1
                     //Get the account number
                     int newAccNum = genNewAccNum();
                     var emailBody = new EmailBody(this.firstName, this.lastName, this.userAddress, this.emailAdd, newAccNum, this.phoneNum);
-
                     //send the email here
                     EmailSender newEmail = new EmailSender();
                     newEmail.sendEmail(this.emailSenderAddress, this.emailAdd, emailBody, 0);
+                    saveAccToDB(emailBody);
 
                     Console.WriteLine("                  Account detail is sent to the provided email address");
                     Console.WriteLine("                  Your new Account number is: " + newAccNum);
@@ -113,16 +113,22 @@ namespace dotNet_ass1
             FileStream accDB = new FileStream("accDB.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
             string[] allAcc = File.ReadAllLines("accDB.txt");
             int newAccNum = 100000 + allAcc.Length;
-            string appendableNum = Convert.ToString(newAccNum);
-            File.AppendAllText("accDB.txt", "\n" + appendableNum);
             accDB.Close();
             return newAccNum;
         }
         private void saveAccToDB(EmailBody emailBody)
         {
             FileStream newAccFile = new FileStream($"{emailBody.userAccNum}.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
-            File.AppendAllText($"{emailBody.userAccNum}.txt", Convert.ToString(emailBody.userAccNum));
-
+            File.WriteAllText($"{emailBody.userAccNum}.txt", Convert.ToString(emailBody.userAccNum));
+            File.AppendAllText($"{emailBody.userAccNum}.txt", $"\n{0}");
+            File.AppendAllText($"{emailBody.userAccNum}.txt", $"\n{emailBody.userFirstName}");
+            File.AppendAllText($"{emailBody.userAccNum}.txt", $"\n{emailBody.userLastName}");
+            File.AppendAllText($"{emailBody.userAccNum}.txt", $"\n{emailBody.userAddress}");
+            File.AppendAllText($"{emailBody.userAccNum}.txt", $"\n{emailBody.userPhone}");
+            File.AppendAllText($"{emailBody.userAccNum}.txt", $"\n{emailBody.userEmail}");
+            newAccFile.Close();
+            string appendableNum = Convert.ToString(emailBody.userAccNum);
+            File.AppendAllText("accDB.txt", "\n" + appendableNum);
         }
     }
 }
