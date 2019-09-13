@@ -84,14 +84,16 @@ namespace dotNet_ass1
                     }
                     //Get the account number
                     int newAccNum = genNewAccNum();
+                    var emailBody = new EmailBody(this.firstName, this.lastName, this.userAddress, this.emailAdd, newAccNum, this.phoneNum);
 
                     //send the email here
                     EmailSender newEmail = new EmailSender();
-                    newEmail.sendEmail(this.emailSenderAddress, this.emailAdd);
+                    newEmail.sendEmail(this.emailSenderAddress, this.emailAdd, emailBody, 0);
 
                     Console.WriteLine("                  Account detail is sent to the provided email address");
+                    Console.WriteLine("                  Your new Account number is: " + newAccNum);
+                    Console.WriteLine("                  Press any key to go to the menu..");
                     
-
                     Console.ReadKey();
 
 
@@ -115,6 +117,12 @@ namespace dotNet_ass1
             File.AppendAllText("accDB.txt", "\n" + appendableNum);
             accDB.Close();
             return newAccNum;
+        }
+        private void saveAccToDB(EmailBody emailBody)
+        {
+            FileStream newAccFile = new FileStream($"{emailBody.userAccNum}.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            File.AppendAllText($"{emailBody.userAccNum}.txt", Convert.ToString(emailBody.userAccNum));
+
         }
     }
 }

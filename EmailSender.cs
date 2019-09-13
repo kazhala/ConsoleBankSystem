@@ -5,14 +5,14 @@ namespace dotNet_ass1
 {
     public class EmailSender
     {
-        public void sendEmail(string from, string to)
+        public void sendEmail(string from, string to, EmailBody emailBody, float balance)
         {
             using (SmtpClient smtpClient = new SmtpClient())
             {
                 var basicCredential = new NetworkCredential("xuzhuang9897@gmail.com", "Wacdzx666");
                 using (MailMessage message = new MailMessage())
                 {
-                    MailAddress fromAddress = new MailAddress("xuzhuang9897@gmail.com");
+                    MailAddress fromAddress = new MailAddress(from);
 
                     smtpClient.EnableSsl = true;
                     smtpClient.Port = 587;
@@ -21,20 +21,26 @@ namespace dotNet_ass1
                     smtpClient.Credentials = basicCredential;
 
                     message.From = fromAddress;
-                    message.Subject = "your subject";
+                    message.Subject = "Your new KAZ bank account detail";
                     // Set IsBodyHtml to true means you can send HTML email.
                     message.IsBodyHtml = true;
-                    message.Body = "<h1>your message body</h1>";
-                    message.To.Add("kevin7441@gmail.com");
+                    message.Body = $"<h3>Below is your new account detail</h3>" +
+                        $"\n<p>Account number: {emailBody.userAccNum}</p> " +
+                        $"\n<p>First name: {emailBody.userFirstName}</p>" +
+                        $"\n<p>Last name: {emailBody.userLastName}</p>" +
+                        $"\n<p>Address: {emailBody.userAddress}</p>" +
+                        $"\n<p>Phone: {emailBody.userPhone}</p>";
+                    message.To.Add(to);
 
                     try
                     {
+                        Console.WriteLine("                  Please wait for the email to be sent...");
                         smtpClient.Send(message);
                     }
                     catch (Exception ex)
                     {
                         //Error, could not send the message
-                        Console.Write(ex.Message);
+                        Console.WriteLine(ex.Message);
                     }
                 }
             }
