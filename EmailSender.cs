@@ -5,7 +5,7 @@ namespace dotNet_ass1
 {
     public class EmailSender
     {
-        public void sendEmail(string from, string to, EmailBody emailBody, double balance)
+        public void sendEmail(string from, string to, EmailBody emailBody, double balance, bool newAcc)
         {
             using (SmtpClient smtpClient = new SmtpClient())
             {
@@ -22,10 +22,13 @@ namespace dotNet_ass1
 
                     message.From = fromAddress;
                     message.Subject = "Your new KAZ bank account detail";
+                    string status = newAcc ? "new account detail" : "bank account statement";
+                    string displayBalance = newAcc ? "" : $"\n<p>Account Balance: ${Convert.ToString(balance)}</p>";
                     // Set IsBodyHtml to true means you can send HTML email.
                     message.IsBodyHtml = true;
-                    message.Body = $"<h3>Below is your new account detail</h3>" +
+                    message.Body = $"<h3>Below is your {status}</h3>" +
                         $"\n<p>Account number: {emailBody.userAccNum}</p> " +
+                        displayBalance +
                         $"\n<p>First name: {emailBody.userFirstName}</p>" +
                         $"\n<p>Last name: {emailBody.userLastName}</p>" +
                         $"\n<p>Address: {emailBody.userAddress}</p>" +
@@ -34,7 +37,7 @@ namespace dotNet_ass1
 
                     try
                     {
-                        Console.WriteLine("                  Please wait for the email to be sent...");
+                        Console.WriteLine("                 Please wait for the email to be sent...");
                         smtpClient.Send(message);
                     }
                     catch (Exception ex)

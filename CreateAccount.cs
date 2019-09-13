@@ -88,7 +88,7 @@ namespace dotNet_ass1
                     var emailBody = new EmailBody(this.firstName, this.lastName, this.userAddress, this.emailAdd, newAccNum, this.phoneNum);
                     //send the email here
                     EmailSender newEmail = new EmailSender();
-                    newEmail.sendEmail(this.emailSenderAddress, this.emailAdd, emailBody, 0);
+                    newEmail.sendEmail(this.emailSenderAddress, this.emailAdd, emailBody, 0, true);
                     saveAccToDB(emailBody);
 
                     Console.WriteLine("                  Account detail is sent to the provided email address");

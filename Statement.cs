@@ -7,6 +7,7 @@ namespace dotNet_ass1
         private bool error;
         private int accNum;
         private int feedbackLeft, feedbackTop;
+        private string emailSenderAddress = "xuzhuang9897@gmail.com";
         public void StatementScreen()
         {
             do
@@ -41,9 +42,11 @@ namespace dotNet_ass1
                     else if (checkExist(this.accNum))
                     {
                         Console.WriteLine("                 Account found, statement is displayed below.");
+                        Console.WriteLine("");
                         displayFound(this.accNum);
                     }
-                    
+
+                    Console.WriteLine("                 Email sent Successfully!...");
                     Console.WriteLine("                 Press any key to go to the menu..");
                     Console.ReadKey();
                 }
@@ -52,8 +55,17 @@ namespace dotNet_ass1
                     this.error = true;
                     Console.SetCursorPosition(this.feedbackLeft, this.feedbackTop);
                     Console.WriteLine("                 " + e.Message);
-                    Console.WriteLine("                 Press any key to re-enter..");
-                    Console.ReadKey();
+                    string confirm = "";
+                    while (confirm != "y" && confirm != "n")
+                    {
+                        Console.Write("                 Retry (y/n)? ");
+                        confirm = Console.ReadLine();
+                    }
+                    if (confirm == "n")
+                    {
+                        this.error = false;
+                    }
+                    
                 }
             } while (this.error);
         }
@@ -85,7 +97,54 @@ namespace dotNet_ass1
             Console.WriteLine($"          Address: {accoutDetail[4]}                                  ");
             Console.WriteLine($"          Phone: {accoutDetail[5]}                                    ");
             Console.WriteLine($"          Email: {accoutDetail[6]}                                    ");
+            switch (accoutDetail.Length)
+            {
+                case 7:
+                    Console.WriteLine($"          Recent Transcation: N/A");
+                    break;
+                case 8:
+                    Console.WriteLine($"          Recent Transcation: {accoutDetail[7]}");
+                    break;
+                case 9:
+                    Console.WriteLine($"          Recent Transcation: {accoutDetail[7]}");
+                    Console.WriteLine($"          Recent Transcation: {accoutDetail[8]}");
+                    break;
+                case 10:
+                    Console.WriteLine($"          Recent Transcation: {accoutDetail[7]}");
+                    Console.WriteLine($"          Recent Transcation: {accoutDetail[8]}");
+                    Console.WriteLine($"          Recent Transcation: {accoutDetail[9]}");
+                    break;
+                case 11:
+                    Console.WriteLine($"          Recent Transcation: {accoutDetail[7]}");
+                    Console.WriteLine($"          Recent Transcation: {accoutDetail[8]}");
+                    Console.WriteLine($"          Recent Transcation: {accoutDetail[9]}");
+                    Console.WriteLine($"          Recent Transcation: {accoutDetail[10]}");
+                    break;
+                default:
+                    Console.WriteLine($"          Recent Transcation: {accoutDetail[accoutDetail.Length - 5]}");
+                    Console.WriteLine($"          Recent Transcation: {accoutDetail[accoutDetail.Length - 4]}");
+                    Console.WriteLine($"          Recent Transcation: {accoutDetail[accoutDetail.Length - 3]}");
+                    Console.WriteLine($"          Recent Transcation: {accoutDetail[accoutDetail.Length - 2]}");
+                    Console.WriteLine($"          Recent Transcation: {accoutDetail[accoutDetail.Length - 1]}");
+                    break;
+            }
             Console.WriteLine("         ------------------------------------------------------------- ");
+            Console.WriteLine("");
+            string emailState = "";
+            while (emailState != "y" && emailState != "n")
+            {
+                Console.Write("                 Email statement (y/n)? ");
+                emailState = Console.ReadLine();
+            }
+            if (emailState == "n")
+            {
+                this.error = false;
+            } else if (emailState == "y")
+            {
+                EmailBody emailBody = new EmailBody(accoutDetail[2], accoutDetail[3], accoutDetail[4], accoutDetail[6], Convert.ToInt32(accoutDetail[0]), Convert.ToInt32(accoutDetail[5]));
+                EmailSender emailSender = new EmailSender();
+                emailSender.sendEmail(this.emailSenderAddress, accoutDetail[6], emailBody, Convert.ToDouble(accoutDetail[1]), false);
+            }
         }
     }
 }

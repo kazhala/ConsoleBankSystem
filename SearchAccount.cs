@@ -7,6 +7,7 @@ namespace dotNet_ass1
         private bool error;
         private int accNum;
         private int feedbackLeft, feedbackTop;
+        private string confirm;
         public void SearchAccountScreen()
         {
             do
@@ -40,29 +41,27 @@ namespace dotNet_ass1
                     } else if (checkExist(this.accNum))
                     {
                         displayFound(this.accNum);
-                    }
-                    string confirm = "";
-                    while (confirm != "y" && confirm != "n")
-                    {
-                        Console.Write("                 Check another account (y/n)? ");
-                        confirm = Console.ReadLine();
-                    }
-                    if (confirm == "y")
-                    {
                         this.feedbackLeft = Console.CursorLeft;
                         this.feedbackTop = Console.CursorTop;
-                        throw new Exception("");
                     }
-                    Console.WriteLine("                 Press any key to go to the menu..");
-                    Console.ReadKey();
+                    throw new Exception("");
+                  
                 }
                 catch (Exception e)
                 {
                     this.error = true;
                     Console.SetCursorPosition(this.feedbackLeft, this.feedbackTop);
                     Console.WriteLine("                 " + e.Message);
-                    Console.WriteLine("                 Press any key to re-enter..");
-                    Console.ReadKey();
+                    this.confirm = "";
+                    while (this.confirm != "y" && this.confirm != "n")
+                    {
+                        Console.Write("                 Check another account (y/n)? ");
+                        this.confirm = Console.ReadLine();
+                    }
+                    if (this.confirm == "n")
+                    {
+                        this.error = false;
+                    }
                 }
             } while (this.error);
         }

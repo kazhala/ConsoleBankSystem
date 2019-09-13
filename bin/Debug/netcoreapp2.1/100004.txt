@@ -1,5 +1,5 @@
 100004
-99995.99
+87965
 kevin
 zhuang
 142 kissing
@@ -7,3 +7,7 @@ zhuang
 kevin7441@gmail.com
 Deposit: 100000.99
 Withdraw: 5
+Deposit: 213
+Deposit: 88
+Withdraw: 12333
+Deposit: 1.01

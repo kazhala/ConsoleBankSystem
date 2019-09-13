@@ -73,8 +73,7 @@ namespace dotNet_ass1
                     {
                         this.error = false;
                     }
-                    Console.WriteLine("                 Press any key to continue..");
-                    Console.ReadKey();
+                    
                 }
 
             } while (this.error);
