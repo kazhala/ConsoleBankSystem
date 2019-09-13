@@ -26,6 +26,9 @@ namespace dotNet_ass1
                         SearchAccount searchAcc = new SearchAccount();
                         searchAcc.SearchAccountScreen();
                         break;
+                    case 3:
+                        Deposit deposit = new Deposit();
+                        deposit.DepositScreen();
                     case 7:
                         System.Environment.Exit(0);
 
