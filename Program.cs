@@ -34,6 +34,10 @@ namespace dotNet_ass1
                         Withdraw withdraw = new Withdraw();
                         withdraw.WithdrawScreen();
                         break;
+                    case 5:
+                        Statement statement = new Statement();
+                        statement.StatementScreen();
+                        break;
                     case 7:
                         System.Environment.Exit(0);
 

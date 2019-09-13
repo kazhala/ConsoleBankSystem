@@ -2,12 +2,12 @@
 using System.IO;
 namespace dotNet_ass1
 {
-    public class SearchAccount
+    public class Statement
     {
         private bool error;
         private int accNum;
         private int feedbackLeft, feedbackTop;
-        public void SearchAccountScreen()
+        public void StatementScreen()
         {
             do
             {
@@ -16,7 +16,7 @@ namespace dotNet_ass1
                     this.error = false;
                     Console.Clear();
                     Console.WriteLine("         ------------------------------------------------------------- ");
-                    Console.WriteLine("        |                       Search An Account                     |");
+                    Console.WriteLine("        |                           Statement                         |");
                     Console.WriteLine("         =============================================================");
                     Console.WriteLine("        |                 Enter the Account number below              |");
                     Console.WriteLine("        |                                                             |");
@@ -29,30 +29,21 @@ namespace dotNet_ass1
                     this.feedbackLeft = Console.CursorLeft;
                     this.feedbackTop = Console.CursorTop;
                     Console.SetCursorPosition(numberLeft, numberTop);
-                    
+
                     string tempInput = Console.ReadLine();
                     //Console.WriteLine(tempInput);
                     this.accNum = Convert.ToInt32(tempInput);
                     Console.SetCursorPosition(this.feedbackLeft, this.feedbackTop);
                     if (!checkExist(this.accNum))
                     {
-                        Console.WriteLine("                 Account not found");
-                    } else if (checkExist(this.accNum))
+                        throw new Exception("Account not found");
+                    }
+                    else if (checkExist(this.accNum))
                     {
+                        Console.WriteLine("                 Account found, statement is displayed below.");
                         displayFound(this.accNum);
                     }
-                    string confirm = "";
-                    while (confirm != "y" && confirm != "n")
-                    {
-                        Console.Write("                 Check another account (y/n)? ");
-                        confirm = Console.ReadLine();
-                    }
-                    if (confirm == "y")
-                    {
-                        this.feedbackLeft = Console.CursorLeft;
-                        this.feedbackTop = Console.CursorTop;
-                        throw new Exception("");
-                    }
+                    
                     Console.WriteLine("                 Press any key to go to the menu..");
                     Console.ReadKey();
                 }
@@ -72,11 +63,11 @@ namespace dotNet_ass1
             string[] allAcc = File.ReadAllLines("accDB.txt");
             foreach (string line in allAcc)
             {
-                
-                    if (Convert.ToInt32(line) == accnumber)
-                    {
-                        return true;
-                    }
+
+                if (Convert.ToInt32(line) == accnumber)
+                {
+                    return true;
+                }
             }
             return false;
         }

@@ -25,10 +25,10 @@ namespace dotNet_ass1
                     int accLeft = Console.CursorLeft;
                     int accTop = Console.CursorTop;
                     Console.Write("                                            |\n");
-                    Console.Write("        | Amount: ");
+                    Console.Write("        | Amount: $");
                     int amountLeft = Console.CursorLeft;
                     int amountTop = Console.CursorTop;
-                    Console.Write("                                                    |\n");
+                    Console.Write("                                                   |\n");
                     Console.WriteLine("        |                                                             |");
                     Console.WriteLine("         ------------------------------------------------------------- ");
                     this.feedbackLeft = Console.CursorLeft;
@@ -101,6 +101,10 @@ namespace dotNet_ass1
             {
                 throw new Exception("Insufficient balance");
             }
+            if (amt < 0)
+            {
+                throw new Exception("Cannot with draw negative amount");
+            }
             double newAmt = prevAmt - amt;
             accountDetail[1] = Convert.ToString(newAmt);
             File.WriteAllText($"{acc}.txt", accountDetail[0]);
@@ -108,6 +112,7 @@ namespace dotNet_ass1
             {
                 File.AppendAllText($"{acc}.txt", $"\n{accountDetail[lineNum]}");
             }
+            File.AppendAllText($"{acc}.txt", $"\nWithdraw: {Convert.ToString(amt)}");
         }
     }
 }
