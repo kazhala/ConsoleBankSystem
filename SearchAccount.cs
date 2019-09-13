@@ -34,6 +34,10 @@ namespace dotNet_ass1
                     string tempInput = Console.ReadLine();
                     //Console.WriteLine(tempInput);
                     this.accNum = Convert.ToInt32(tempInput);
+                    if (tempInput.Length > 10)
+                    {
+                        throw new Exception("Account number invalid");
+                    }
                     Console.SetCursorPosition(this.feedbackLeft, this.feedbackTop);
                     if (!checkExist(this.accNum))
                     {

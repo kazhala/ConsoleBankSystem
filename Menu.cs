@@ -47,7 +47,7 @@ namespace dotNet_ass1
                     Console.WriteLine("                 " + e.Message);
                     error = true;
                     Console.WriteLine("                 Press any key to continue...");
-                    Console.ReadKey();
+                    //Console.ReadKey();
                 }
                 finally
                 {

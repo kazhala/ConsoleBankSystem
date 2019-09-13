@@ -32,12 +32,13 @@ namespace dotNet_ass1
                         $"\n<p>First name: {emailBody.userFirstName}</p>" +
                         $"\n<p>Last name: {emailBody.userLastName}</p>" +
                         $"\n<p>Address: {emailBody.userAddress}</p>" +
-                        $"\n<p>Phone: {emailBody.userPhone}</p>";
+                        $"\n<p>Phone: {emailBody.userPhone}</p>" +
+                        $"\n<p>Email Address: {emailBody.userEmail}</p>";
                     message.To.Add(to);
 
                     try
                     {
-                        Console.WriteLine("                 Please wait for the email to be sent...");
+                        Console.WriteLine("                  Please wait for the email to be sent...");
                         smtpClient.Send(message);
                     }
                     catch (Exception ex)
