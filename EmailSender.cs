@@ -5,7 +5,7 @@ namespace dotNet_ass1
 {
     public class EmailSender
     {
-        public void sendEmail(string from, string to, EmailBody emailBody, float balance)
+        public void sendEmail(string from, string to, EmailBody emailBody, double balance)
         {
             using (SmtpClient smtpClient = new SmtpClient())
             {

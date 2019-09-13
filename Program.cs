@@ -29,6 +29,7 @@ namespace dotNet_ass1
                     case 3:
                         Deposit deposit = new Deposit();
                         deposit.DepositScreen();
+                        break;
                     case 7:
                         System.Environment.Exit(0);
 
