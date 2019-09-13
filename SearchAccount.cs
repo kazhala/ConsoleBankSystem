@@ -41,18 +41,19 @@ namespace dotNet_ass1
                     {
                         displayFound(this.accNum);
                     }
-                    Console.Write("Check another account (y/n)? ");
                     string confirm = "";
                     while (confirm != "y" && confirm != "n")
                     {
-                        Console.Write("                  Check another account (y/n)? ");
+                        Console.Write("                 Check another account (y/n)? ");
                         confirm = Console.ReadLine();
                     }
                     if (confirm == "y")
                     {
+                        this.feedbackLeft = Console.CursorLeft;
+                        this.feedbackTop = Console.CursorTop;
                         throw new Exception("");
                     }
-                    Console.WriteLine("                  Press any key to go to the menu..");
+                    Console.WriteLine("                 Press any key to go to the menu..");
                     Console.ReadKey();
                 }
                 catch (Exception e)
@@ -60,7 +61,7 @@ namespace dotNet_ass1
                     this.error = true;
                     Console.SetCursorPosition(this.feedbackLeft, this.feedbackTop);
                     Console.WriteLine("                 " + e.Message);
-                    Console.WriteLine("                 Press any key to re-enter details..");
+                    Console.WriteLine("                 Press any key to re-enter..");
                     Console.ReadKey();
                 }
             } while (this.error);
@@ -85,14 +86,14 @@ namespace dotNet_ass1
             Console.WriteLine("         ------------------------------------------------------------- ");
             Console.WriteLine("        |                        Account Details                      |");
             Console.WriteLine("         =============================================================");
-            Console.WriteLine("        |                                                             |");
-            Console.WriteLine($"        | Account No: {accoutDetail[0]}                                             |");
-            Console.WriteLine($"        | Account Balance: {accoutDetail[1]}                                        |");
-            Console.WriteLine($"        | First Name: {accoutDetail[2]}                                                |");
-            Console.WriteLine($"        | Last Name: {accoutDetail[3]}                                              |");
-            Console.WriteLine($"        | Address: {accoutDetail[4]}                                                |");
-            Console.WriteLine($"        | Phone: {accoutDetail[5]}                                                  |");
-            Console.WriteLine($"        | Email: {accoutDetail[6]}                                                  |");
+            Console.WriteLine("                                                                       ");
+            Console.WriteLine($"          Account No: {accoutDetail[0]}                               ");
+            Console.WriteLine($"          Account Balance: {accoutDetail[1]}                          ");
+            Console.WriteLine($"          First Name: {accoutDetail[2]}                               ");
+            Console.WriteLine($"          Last Name: {accoutDetail[3]}                                ");
+            Console.WriteLine($"          Address: {accoutDetail[4]}                                  ");
+            Console.WriteLine($"          Phone: {accoutDetail[5]}                                    ");
+            Console.WriteLine($"          Email: {accoutDetail[6]}                                    ");
             Console.WriteLine("         ------------------------------------------------------------- ");
         }
     }
