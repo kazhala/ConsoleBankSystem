@@ -34,7 +34,7 @@ namespace dotNet_ass1
                     string tempInput = Console.ReadLine();
                     //Console.WriteLine(tempInput);
                     this.accNum = Convert.ToInt32(tempInput);
-                    if (tempInput.Length > 10)
+                    if (tempInput.Length > 10 || this.accNum == 0)
                     {
                         throw new Exception("Account number invalid");
                     }

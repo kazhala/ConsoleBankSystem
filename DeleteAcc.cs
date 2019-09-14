@@ -34,7 +34,7 @@ namespace dotNet_ass1
                     string tempInput = Console.ReadLine();
                     //Console.WriteLine(tempInput);
                     this.accNum = Convert.ToInt32(tempInput);
-                    if (tempInput.Length > 10)
+                    if (tempInput.Length > 10 || this.accNum == 0)
                     {
                         throw new Exception("Invalid account number");
                     }
@@ -122,15 +122,21 @@ namespace dotNet_ass1
             ArrayList updatedAllAccount = new ArrayList();
             foreach (string account in allAccount)
             {
-                Console.WriteLine(account);
+                //Console.WriteLine(account);
                 updatedAllAccount.Add(account);
             }
             updatedAllAccount.Remove(Convert.ToString(accnumber));
+            updatedAllAccount.Add("0");
+            File.WriteAllText("accDB.txt", Convert.ToString(updatedAllAccount[0]));
+            updatedAllAccount.RemoveAt(0);
             foreach (string account in updatedAllAccount)
             {
-                Console.WriteLine(account);
+                //Console.WriteLine(account);
+                File.AppendAllText("accDB.txt", "\n"+Convert.ToString(account));
             }
-            
+            File.Delete($"{accnumber}.txt");
+            Console.WriteLine("");
+            Console.WriteLine("                  Account deleted..");
         }
     }
 }

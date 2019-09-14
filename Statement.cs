@@ -34,7 +34,7 @@ namespace dotNet_ass1
                     string tempInput = Console.ReadLine();
                     //Console.WriteLine(tempInput);
                     this.accNum = Convert.ToInt32(tempInput);
-                    if (tempInput.Length > 10)
+                    if (tempInput.Length > 10 || this.accNum == 0)
                     {
                         throw new Exception("Invalid account number");
                     }
@@ -50,9 +50,7 @@ namespace dotNet_ass1
                         displayFound(this.accNum);
                     }
 
-                    Console.WriteLine("                  Email sent Successfully!...");
-                    Console.WriteLine("                  Press any key to go to the menu..");
-                    Console.ReadKey();
+                    
                 }
                 catch (Exception e)
                 {
@@ -148,6 +146,9 @@ namespace dotNet_ass1
                 EmailBody emailBody = new EmailBody(accoutDetail[2], accoutDetail[3], accoutDetail[4], accoutDetail[6], Convert.ToInt32(accoutDetail[0]), Convert.ToInt32(accoutDetail[5]));
                 EmailSender emailSender = new EmailSender();
                 emailSender.sendEmail(this.emailSenderAddress, accoutDetail[6], emailBody, Convert.ToDouble(accoutDetail[1]), false);
+                Console.WriteLine("                  Email sent Successfully!...");
+                Console.WriteLine("                  Press any key to go to the menu..");
+                Console.ReadKey();
             }
         }
     }
