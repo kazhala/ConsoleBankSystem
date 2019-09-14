@@ -38,6 +38,10 @@ namespace dotNet_ass1
                         Statement statement = new Statement();
                         statement.StatementScreen();
                         break;
+                    case 6:
+                        DeleteAcc deleteAcc = new DeleteAcc();
+                        deleteAcc.DeleteScreen();
+                        break;
                     case 7:
                         System.Environment.Exit(0);
 
