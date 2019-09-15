@@ -1,9 +1,13 @@
 100000
-100999200.01
-asdfas
-fadsfas
-asfasdf
-212
+772.99
+kevin
+zhuang
+142 king st
+66754321
 kevin7441@gmail.com
-Deposit: 100.01
-Deposit: 99999999.99
+Deposit: 200.00001
+Deposit: 500
+Deposit: 1
+Deposit: 2
+Deposit: 99.99
+Withdraw: 30

@@ -2,6 +2,7 @@
 using System.IO;
 namespace dotNet_ass1
 {
+    //display statement
     public class Statement
     {
         private bool error;
@@ -10,6 +11,9 @@ namespace dotNet_ass1
         private string emailSenderAddress = "xuzhuang9897@gmail.com";
         public void StatementScreen()
         {
+            ErrorHandler errorHandler = new ErrorHandler();
+            CheckDBacc checkDBacc = new CheckDBacc();
+            DisplayDetail displayDetail = new DisplayDetail();
             do
             {
                 try

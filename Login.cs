@@ -8,13 +8,9 @@ namespace dotNet_ass1
         private string userName;
         private string passWord;
         private bool loginSuccess = false;
-        public string Name
-        {
-            get
-            {
-                return this.userName;
-            }
-        }
+
+        //main program need access to the state of loginSuccess
+        //Get method for loginSuccess private field
         public bool LoginSuccess
         {
             get
@@ -26,26 +22,33 @@ namespace dotNet_ass1
         {
             Console.Clear();
             this.passWord = "";
-            Console.WriteLine("         ------------------------------------------------------------- ");
-            Console.WriteLine("        |                Welcome to KAZ Banking System                |");
-            Console.WriteLine("         =============================================================");
-            Console.WriteLine("        |                        Please Login                         |");
-            Console.WriteLine("        |                                                             |");
-            Console.Write("        | User name: ");
+            Console.WriteLine("\t ------------------------------------------------------------- ");
+            Console.WriteLine("\t|                Welcome to KAZ Banking System                |");
+            Console.WriteLine("\t =============================================================");
+            Console.WriteLine("\t|                        Please Login                         |");
+            Console.WriteLine("\t|                                                             |");
+            Console.Write("\t| User name: ");
+
+            //record the position for username input
             int usernameLeft = Console.CursorLeft;
             int usernameTop = Console.CursorTop;
             Console.Write("                                                 |\n");
-            Console.Write("        | Password: ");
+            Console.Write("\t| Password: ");
             int passwordLeft = Console.CursorLeft;
             int passwordTop = Console.CursorTop;
             Console.Write("                                                  |\n");
-            Console.WriteLine("        |                                                             |");
-            Console.WriteLine("         ------------------------------------------------------------- ");
+            Console.WriteLine("\t|                                                             |");
+            Console.WriteLine("\t ------------------------------------------------------------- ");
             int resultLeft = Console.CursorLeft;
             int resultTop = Console.CursorTop;
+
+            //set the position for user input
             Console.SetCursorPosition(usernameLeft, usernameTop);
             this.userName = Console.ReadLine();
             Console.SetCursorPosition(passwordLeft, passwordTop);
+
+            //handle user entering password, display * for each char enter
+            //end the loop when user press enter
             do
             {
                 ConsoleKeyInfo key = Console.ReadKey(true);
@@ -59,35 +62,40 @@ namespace dotNet_ass1
                 {
                     if (key.Key == ConsoleKey.Backspace && this.passWord.Length > 0)
                     {
+                        //handle user press backspace
                         this.passWord = this.passWord.Substring(0, (this.passWord.Length - 1));
                         Console.Write("\b \b");
                     }
                     else if (key.Key == ConsoleKey.Enter)
                     {
+                        //terminate the loop
                         break;
                     }
                 }
             } while (true);
             Console.SetCursorPosition(resultLeft, resultTop);
-            //Console.WriteLine(this.passWord);
 
+            //store the data of the login file to an array
             string[] loginDetail = File.ReadAllLines("login.txt");
+
+            //loop over the stored array
             foreach (string line in loginDetail)
             {
+                //Split the user name and password
                 string[] namepass = line.Split('|');
-                //Console.WriteLine(namepass[0]);
+                //if username match, check password
                 if (this.userName == namepass[0])
                 {
                     if (this.passWord == namepass[1])
                     {
-                        //Console.WriteLine(this.passWord == namepass[1]);
                         this.loginSuccess = true;
              
                     }
                 }
             
             }
-           //Console.WriteLine(this.loginSuccess);
+
+            //if loginSuccess still false, username or password is wrong, prompt user with error message
             if (!this.loginSuccess)
             {
                 Console.Write("        Credential invalid, please re-enter your detail!");

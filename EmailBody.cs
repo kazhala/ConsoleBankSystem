@@ -1,6 +1,7 @@
 ﻿using System;
 namespace dotNet_ass1
 {
+    //struct to hold the detail for email body information
     public struct EmailBody
     {
         public string userFirstName, userLastName, userAddress, userEmail;

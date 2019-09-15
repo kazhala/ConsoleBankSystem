@@ -2,6 +2,7 @@
 using System.IO;
 namespace dotNet_ass1
 {
+    //display the search account screen
     public class SearchAccount
     {
         private bool error;
@@ -10,94 +11,96 @@ namespace dotNet_ass1
         private string confirm;
         public void SearchAccountScreen()
         {
+            CheckDBacc checkDBacc = new CheckDBacc();
+
+            //do while loop to keep display the screen incase user want to re enter
             do
             {
                 try
                 {
                     this.error = false;
                     Console.Clear();
-                    Console.WriteLine("         ------------------------------------------------------------- ");
-                    Console.WriteLine("        |                       Search An Account                     |");
-                    Console.WriteLine("         =============================================================");
-                    Console.WriteLine("        |                 Enter the Account number below              |");
-                    Console.WriteLine("        |                                                             |");
-                    Console.Write("        | Account number: ");
+                    Console.WriteLine("\t ------------------------------------------------------------- ");
+                    Console.WriteLine("\t|                       Search An Account                     |");
+                    Console.WriteLine("\t =============================================================");
+                    Console.WriteLine("\t|                 Enter the Account number below              |");
+                    Console.WriteLine("\t|                                                             |");
+                    Console.Write("\t| Account number: ");
+
+                    //record cursor position
                     int numberLeft = Console.CursorLeft;
                     int numberTop = Console.CursorTop;
                     Console.Write("                                            |\n");
-                    Console.WriteLine("        |                                                             |");
-                    Console.WriteLine("         ------------------------------------------------------------- ");
+                    Console.WriteLine("\t|                                                             |");
+                    Console.WriteLine("\t ------------------------------------------------------------- ");
                     this.feedbackLeft = Console.CursorLeft;
                     this.feedbackTop = Console.CursorTop;
+
+                    //set cursor posiition to account number position
                     Console.SetCursorPosition(numberLeft, numberTop);
                     
                     string tempInput = Console.ReadLine();
-                    //Console.WriteLine(tempInput);
                     this.accNum = Convert.ToInt32(tempInput);
+
+                    //check if account entered is within 10 digits
+                    //check if enter = 0 because in accDB, after account deletion, 0 would be placeholder
                     if (tempInput.Length > 10 || this.accNum == 0)
                     {
                         throw new Exception("Account number invalid");
                     }
                     Console.SetCursorPosition(this.feedbackLeft, this.feedbackTop);
-                    if (!checkExist(this.accNum))
+
+                    //check if acc number is in the accDB.txt
+                    if (!checkDBacc.checkExist(this.accNum))
                     {
-                        Console.WriteLine("                 Account not found");
-                    } else if (checkExist(this.accNum))
+                        Console.WriteLine("\t\t Account not found");
+                    } else if (checkDBacc.checkExist(this.accNum))
                     {
+                        //display the account detail
                         displayFound(this.accNum);
                         this.feedbackLeft = Console.CursorLeft;
                         this.feedbackTop = Console.CursorTop;
                     }
+
+                    //let user decide if want to continue
                     throw new Exception("");
                   
                 }
                 catch (Exception e)
                 {
+                    //set error to true to continue looping
                     this.error = true;
                     Console.SetCursorPosition(this.feedbackLeft, this.feedbackTop);
-                    Console.WriteLine("                 " + e.Message);
+                    Console.WriteLine("\t\t " + e.Message);
                     this.confirm = "";
                     while (this.confirm != "y" && this.confirm != "n")
                     {
-                        Console.Write("                 Check another account (y/n)? ");
+                        Console.Write("\t\t Check another account (y/n)? ");
                         this.confirm = Console.ReadLine();
                     }
                     if (this.confirm == "n")
                     {
+                        //if no, then stop loop
                         this.error = false;
                     }
                 }
             } while (this.error);
         }
-        private bool checkExist(int accnumber)
-        {
-            //FileStream accDB = new FileStream("accDB.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
-            string[] allAcc = File.ReadAllLines("accDB.txt");
-            foreach (string line in allAcc)
-            {
-                
-                    if (Convert.ToInt32(line) == accnumber)
-                    {
-                        return true;
-                    }
-            }
-            return false;
-        }
+
+        
+
+        //used to display the account detail
         private void displayFound(int accnumber)
         {
+            DisplayDetail displayDetail = new DisplayDetail();
+            //store user detail to array
             string[] accoutDetail = File.ReadAllLines($"{accnumber}.txt");
-            Console.WriteLine("         ------------------------------------------------------------- ");
-            Console.WriteLine("        |                        Account Details                      |");
-            Console.WriteLine("         =============================================================");
-            Console.WriteLine("                                                                       ");
-            Console.WriteLine($"          Account No: {accoutDetail[0]}                               ");
-            Console.WriteLine($"          Account Balance: ${accoutDetail[1]}                          ");
-            Console.WriteLine($"          First Name: {accoutDetail[2]}                               ");
-            Console.WriteLine($"          Last Name: {accoutDetail[3]}                                ");
-            Console.WriteLine($"          Address: {accoutDetail[4]}                                  ");
-            Console.WriteLine($"          Phone: {accoutDetail[5]}                                    ");
-            Console.WriteLine($"          Email: {accoutDetail[6]}                                    ");
-            Console.WriteLine("         ------------------------------------------------------------- ");
+            Console.WriteLine("\t ------------------------------------------------------------- ");
+            Console.WriteLine("\t|                        Account Details                      |");
+            Console.WriteLine("\t =============================================================");
+            Console.WriteLine("");
+            displayDetail.UserDetails(accoutDetail);
+            Console.WriteLine("\t ------------------------------------------------------------- ");
         }
     }
 }
