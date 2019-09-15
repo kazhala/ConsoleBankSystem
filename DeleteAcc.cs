@@ -10,97 +10,82 @@ namespace dotNet_ass1
         private int feedbackLeft, feedbackTop;
         public void DeleteScreen()
         {
+            ErrorHandler errorHandler = new ErrorHandler();
+            CheckDBacc checkDBacc = new CheckDBacc();
+            //do while loop if user wants to re-enter
             do
             {
                 try
                 {
                     this.error = false;
                     Console.Clear();
-                    Console.WriteLine("         ------------------------------------------------------------- ");
-                    Console.WriteLine("        |                       Delete an Account                     |");
-                    Console.WriteLine("         =============================================================");
-                    Console.WriteLine("        |                 Enter the Account number below              |");
-                    Console.WriteLine("        |                                                             |");
-                    Console.Write("        | Account number: ");
+                    Console.WriteLine("\t ------------------------------------------------------------- ");
+                    Console.WriteLine("\t|                       Delete an Account                     |");
+                    Console.WriteLine("\t =============================================================");
+                    Console.WriteLine("\t|                 Enter the Account number below              |");
+                    Console.WriteLine("\t|                                                             |");
+                    Console.Write("\t| Account number: ");
+                    //record the current cursor position
                     int numberLeft = Console.CursorLeft;
                     int numberTop = Console.CursorTop;
                     Console.Write("                                            |\n");
-                    Console.WriteLine("        |                                                             |");
-                    Console.WriteLine("         ------------------------------------------------------------- ");
+                    Console.WriteLine("\t|                                                             |");
+                    Console.WriteLine("\t ------------------------------------------------------------- ");
                     this.feedbackLeft = Console.CursorLeft;
                     this.feedbackTop = Console.CursorTop;
+                    //set cursor position
                     Console.SetCursorPosition(numberLeft, numberTop);
 
                     string tempInput = Console.ReadLine();
-                    //Console.WriteLine(tempInput);
                     this.accNum = Convert.ToInt32(tempInput);
+
+                    //check user input if greater than 10 digit
+                    //check for 0 because accDB use 0 as placeholders
                     if (tempInput.Length > 10 || this.accNum == 0)
                     {
                         throw new Exception("Invalid account number");
                     }
                     Console.SetCursorPosition(this.feedbackLeft, this.feedbackTop);
-                    if (!checkExist(this.accNum))
+                    if (!checkDBacc.checkExist(this.accNum))
                     {
                         throw new Exception("Account not found");
                     }
-                    else if (checkExist(this.accNum))
+                    else if (checkDBacc.checkExist(this.accNum))
                     {
-                        Console.WriteLine("                 Account found, Details are displayed below.");
+                        Console.WriteLine("\t\t Account found, Details are displayed below.");
                         Console.WriteLine("");
-                        displayFound(this.accNum);
-                        Console.ReadKey();
+                        //display account detail
+                        //inside diplayFound would call delete file function
+                        DisplayFound(this.accNum);
+                        
                     }
                 }
 
                 catch (Exception e)
                 {
-                    this.error = true;
                     Console.SetCursorPosition(this.feedbackLeft, this.feedbackTop);
-                    Console.WriteLine("                 " + e.Message);
-                    string confirm = "";
-                    while (confirm != "y" && confirm != "n")
-                    {
-                        Console.Write("                 Retry (y/n)? ");
-                        confirm = Console.ReadLine();
-                    }
-                    if (confirm == "n")
-                    {
-                        this.error = false;
-                    }
-
+                    Console.WriteLine("\t\t " + e.Message);
+                    this.error = errorHandler.CheckUserInput();
                 }
 
             } while (this.error);
         }
-        private bool checkExist(int accnumber)
+        
+        private void DisplayFound(int accnumber)
         {
-            //FileStream accDB = new FileStream("accDB.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
-            string[] allAcc = File.ReadAllLines("accDB.txt");
-            foreach (string line in allAcc)
-            {
+            DisplayDetail displayDetail = new DisplayDetail();
 
-                if (Convert.ToInt32(line) == accnumber)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-        private void displayFound(int accnumber)
-        {
+            //store all the detail into array
             string[] accoutDetail = File.ReadAllLines($"{accnumber}.txt");
-            Console.WriteLine("         ------------------------------------------------------------- ");
-            Console.WriteLine("        |                        Account Details                      |");
-            Console.WriteLine("         =============================================================");
-            Console.WriteLine("                                                                       ");
-            Console.WriteLine($"          Account No: {accoutDetail[0]}                               ");
-            Console.WriteLine($"          Account Balance: ${accoutDetail[1]}                          ");
-            Console.WriteLine($"          First Name: {accoutDetail[2]}                               ");
-            Console.WriteLine($"          Last Name: {accoutDetail[3]}                                ");
-            Console.WriteLine($"          Address: {accoutDetail[4]}                                  ");
-            Console.WriteLine($"          Phone: {accoutDetail[5]}                                    ");
-            Console.WriteLine($"          Email: {accoutDetail[6]}                                    ");
-            Console.WriteLine("         ------------------------------------------------------------- ");
+            Console.WriteLine("\t ------------------------------------------------------------- ");
+            Console.WriteLine("\t|                        Account Details                      |");
+            Console.WriteLine("\t =============================================================");
+            Console.WriteLine("");
+            //display user detail
+            displayDetail.UserDetails(accoutDetail);
+            Console.WriteLine("\t ------------------------------------------------------------- ");
+
+            //check if user wants to delete
             string deleteInput = "";
             while (deleteInput != "y" && deleteInput != "n")
             {
@@ -113,30 +98,47 @@ namespace dotNet_ass1
             }
             else if (deleteInput == "y")
             {
-                deleteAction(accnumber);
+                //delete the account file and account number in the accDB
+                DeleteAction(accnumber);
             }
         }
-        private void deleteAction(int accnumber)
+
+        //delete file + account num in accDB
+        private void DeleteAction(int accnumber)
         {
+            //store all acc into array
             string[] allAccount = File.ReadAllLines("accDB.txt");
+
+            //create arrayList for easier array operation
             ArrayList updatedAllAccount = new ArrayList();
+
+            //add all details into arraylist
             foreach (string account in allAccount)
             {
-                //Console.WriteLine(account);
                 updatedAllAccount.Add(account);
             }
+
+            //remove the provided account number from the account list
             updatedAllAccount.Remove(Convert.ToString(accnumber));
+
+            //place a 0 as placeholder for not causing duplicate number when generating new acc num
             updatedAllAccount.Add("0");
+
+            //Clear the file and rewrite the first number into accDB.txt
             File.WriteAllText("accDB.txt", Convert.ToString(updatedAllAccount[0]));
+
+            //remove the first number from arraylist, then add all data from list to the file
             updatedAllAccount.RemoveAt(0);
             foreach (string account in updatedAllAccount)
             {
-                //Console.WriteLine(account);
                 File.AppendAllText("accDB.txt", "\n"+Convert.ToString(account));
             }
+
+            //remove the file
             File.Delete($"{accnumber}.txt");
             Console.WriteLine("");
-            Console.WriteLine("                  Account deleted..");
+            Console.WriteLine("\t\t Account deleted..");
+            Console.ReadKey();
         }
     }
 }
