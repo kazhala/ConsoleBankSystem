@@ -19,7 +19,7 @@ namespace dotNet_ass1
             {
                 try
                 {
-                    error = false;
+                    this.error = false;
                     Console.Clear();
                     Console.WriteLine("\t ------------------------------------------------------------- ");
                     Console.WriteLine("\t|                      Create A New Account                   |");
@@ -104,7 +104,7 @@ namespace dotNet_ass1
                     }
 
                     //Go to the file database to generate a new uniq account number
-                    int newAccNum = genNewAccNum();
+                    int newAccNum = GenNewAccNum();
 
                     //generate a struct for email body
                     var emailBody = new EmailBody(this.firstName, this.lastName, this.userAddress, this.emailAdd, newAccNum, this.phoneNum);
@@ -114,7 +114,7 @@ namespace dotNet_ass1
                     newEmail.sendEmail(this.emailSenderAddress, this.emailAdd, emailBody, 0, true);
 
                     //Save the user detail to a file
-                    saveAccToDB(emailBody);
+                    SaveAccToDB(emailBody);
 
                     Console.WriteLine("\t\t Account detail is sent to the provided email address");
                     Console.WriteLine("\t\t Your new Account number is: " + newAccNum);
@@ -124,18 +124,29 @@ namespace dotNet_ass1
 
 
                 }
+                catch (OverflowException ex)
+                {
+                    //get rid of the warning
+                    //handle exception if user enter a number greater than 10 digit and cannot convert
+                    ex.ToString();
+                    this.error = true;
+                    Console.SetCursorPosition(this.feedbackLeft, this.feedbackTop);
+                    Console.WriteLine("\t\t Please enter a valid number");
+                    Console.WriteLine("\t\t Press any key to re-enter details..");
+                    Console.ReadKey();
+                }
                 catch (Exception e)
                 {
                     //set error to true so that loop would continue to loop
-                    error = true;
+                    this.error = true;
                     Console.SetCursorPosition(this.feedbackLeft, this.feedbackTop);
                     Console.WriteLine("\t\t " + e.Message);
                     Console.WriteLine("\t\t Press any key to re-enter details..");
                     Console.ReadKey();
                 }
-            } while (error);
+            } while (this.error);
         }
-        private int genNewAccNum()
+        private int GenNewAccNum()
         {
             //store all lines in to array
             string[] allAcc = File.ReadAllLines("accDB.txt");
@@ -145,7 +156,7 @@ namespace dotNet_ass1
             int newAccNum = 100000 + allAcc.Length;
             return newAccNum;
         }
-        private void saveAccToDB(EmailBody emailBody)
+        private void SaveAccToDB(EmailBody emailBody)
         {
             //Write all the user details into a file
             File.WriteAllText($"{emailBody.userAccNum}.txt", Convert.ToString(emailBody.userAccNum));

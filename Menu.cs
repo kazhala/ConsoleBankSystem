@@ -55,11 +55,11 @@ namespace dotNet_ass1
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("                 " + e.Message);
+                    Console.WriteLine("\t\t " + e.Message);
 
                     //set error to true so that the loop would execute for user to re-enter
                     error = true;
-                    Console.WriteLine("                 Press any key to continue...");
+                    Console.WriteLine("\t\t Press any key to continue...");
                     //Console.ReadKey();
                 }
                 finally

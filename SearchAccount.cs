@@ -66,23 +66,18 @@ namespace dotNet_ass1
                     throw new Exception("");
                   
                 }
+                catch (OverflowException ex)
+                {
+                    ex.ToString();
+                    Console.SetCursorPosition(this.feedbackLeft, this.feedbackTop);
+                    Console.WriteLine("\t\t Account number invalid");
+                    this.error = ExceptionHandle();
+                }
                 catch (Exception e)
                 {
-                    //set error to true to continue looping
-                    this.error = true;
                     Console.SetCursorPosition(this.feedbackLeft, this.feedbackTop);
                     Console.WriteLine("\t\t " + e.Message);
-                    this.confirm = "";
-                    while (this.confirm != "y" && this.confirm != "n")
-                    {
-                        Console.Write("\t\t Check another account (y/n)? ");
-                        this.confirm = Console.ReadLine();
-                    }
-                    if (this.confirm == "n")
-                    {
-                        //if no, then stop loop
-                        this.error = false;
-                    }
+                    this.error = ExceptionHandle();
                 }
             } while (this.error);
         }
@@ -101,6 +96,22 @@ namespace dotNet_ass1
             Console.WriteLine("");
             displayDetail.UserDetails(accoutDetail);
             Console.WriteLine("\t ------------------------------------------------------------- ");
+        }
+
+        private bool ExceptionHandle()
+        {
+            this.confirm = "";
+            while (this.confirm != "y" && this.confirm != "n")
+            {
+                Console.Write("\t\t Check another account (y/n)? ");
+                this.confirm = Console.ReadLine();
+            }
+            if (this.confirm == "n")
+            {
+                //if no, then stop loop
+                return false;
+            }
+            return true;
         }
     }
 }

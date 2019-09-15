@@ -60,6 +60,13 @@ namespace dotNet_ass1
                         
                     }
                 }
+                catch (OverflowException ex)
+                {
+                    ex.ToString();
+                    Console.SetCursorPosition(this.feedbackLeft, this.feedbackTop);
+                    Console.WriteLine("\t\t Account number is too long");
+                    this.error = errorHandler.CheckUserInput();
+                }
 
                 catch (Exception e)
                 {
@@ -89,7 +96,7 @@ namespace dotNet_ass1
             string deleteInput = "";
             while (deleteInput != "y" && deleteInput != "n")
             {
-                Console.Write("                  Delete (y/n)? ");
+                Console.Write("\t\t Delete (y/n)? ");
                 deleteInput = Console.ReadLine();
             }
             if (deleteInput == "n")
